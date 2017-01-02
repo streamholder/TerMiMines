@@ -18,9 +18,28 @@
     <ClCompile Include="terminines.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ui.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mines.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="populators.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="LICENSE" />
-    <Text Include="README" />
+    <ClInclude Include="ui.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mines.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="populators.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdio_platforms.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

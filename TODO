@@ -1,0 +1,6 @@
+* populators need to be redone since they are pretty much useless without the possibility of state-keeping
+** complete the game:
+   - write a useful board populator after redoing populators
+   - complete the UI with input
+
+* redo ui to be more efficient (only redraw what's needed, this will require a hook in _mines_open_cell_floodfill)

@@ -110,11 +110,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="mines.c" />
+    <ClCompile Include="populators.c" />
     <ClCompile Include="terminines.c" />
+    <ClCompile Include="ui.c" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="LICENSE" />
-    <Text Include="README" />
+    <ClInclude Include="mines.h" />
+    <ClInclude Include="populators.h" />
+    <ClInclude Include="stdio_platforms.h" />
+    <ClInclude Include="ui.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

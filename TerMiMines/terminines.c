@@ -17,9 +17,40 @@
  * along with TerMiMines.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <stdio.h>
+
+#include "mines.h"
+#include "ui.h"
+#include "populators.h"
+
+/*
+ * will find a better solution later
+ */
+#ifdef _MSC_VER
+#define _CRT_SECURE_NO_WARNINGS
+#endif
 
 int main(int argc, char *argv[])
 {
+	unsigned int x, y;
+	MinesBoard game;
+	MinesRuleset rules;
+
+	rules.wraparound = 0;
+
+	if (!mines_init_board(40, 10, &rules, &game))
+	{
+		fprintf(stderr, "Cannot start the game, failed to initialize the board");
+		return 1;
+	}
+
+	mines_populate_board(&game, 0, &populators_pseudorandom);
+
+	mines_compute_board(&game);
+
+	mines_open_cell(&game, 10, 5); /* random test for ui */
+
+	ui_print_board(&game);
 
 	return 0;
 }
