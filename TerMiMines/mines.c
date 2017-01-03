@@ -27,7 +27,7 @@ int mines_init_board(unsigned int width, unsigned int height, MinesRuleset *rule
 	unsigned int i;
 	MinesCell **m;
 
-	/* all this could be done in a single malloc, but I don't care because virual memory space :) */
+	/* all this could be done in a single malloc, but I don't care because virtual memory space :) */
 
 	m = malloc(width * sizeof(MinesCell *)); /* space for column pointers board[x] */
 

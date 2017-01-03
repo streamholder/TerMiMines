@@ -27,7 +27,7 @@ void random_seed(int seed);
 
 /*
  * uniformely get a random unsigned integer in range [min, max].
- * this only works for max - min + 1 < RAND_MAX i.e. it is only guaranteed to work for
- * ranges smaller than 32767
+ * this only works for max - min + 1 <= RAND_MAX i.e. it is only guaranteed to work for
+ * ranges smaller than 32767. it will return max + 1 if max - min + 1 > RAND_MAX
  */
 unsigned int random_uint(unsigned int min, unsigned int max);

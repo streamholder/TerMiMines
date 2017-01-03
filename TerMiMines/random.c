@@ -42,6 +42,11 @@ unsigned int random_uint(unsigned int min, unsigned int max)
 	const int wells = RAND_MAX / range; /* this integer division is the key to everything */
 	const int limit = wells * range;
 
+	if (range > RAND_MAX) /* check to avoid infinite loop */
+	{
+		return max + 1;
+	}
+
 	while (1) /* this is more explicit than do while to the fact that we have to be careful about infinite loops */
 	{
 		candidate = rand();
