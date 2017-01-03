@@ -25,7 +25,7 @@ typedef enum _MinesCellState_e MinesCellState;
 struct _MinesCell_s /* would bit-packing be a good trade-off here? probably not */
 {
 	MinesCellState state;
-	char content; /* bomb = 1, empty = 0 */
+	char content; /* mine = 1, empty = 0 */
 	char neighbours; /* neighbour bombs, 0-8, so char is more than enough */
 };
 typedef struct _MinesCell_s MinesCell;
@@ -47,6 +47,7 @@ struct _MinesBoard_s
 	unsigned int mines;
 	unsigned int flags;
 	unsigned int marks;
+	unsigned int open;
 	MinesRuleset *ruleset; /* TODO: pointer or copy? let's do pointer for now */
 	MinesGameState state;
 };
@@ -79,20 +80,32 @@ void mines_populate_board(MinesBoard *b, int seed, MinesBoardPopulator populator
 /* computes the neighbours for all cells and the number of mines */
 void mines_compute_board(MinesBoard *b);
 
-/* sets a cell to the passed state */
-void mines_set_cell(MinesBoard *b, unsigned int x, unsigned int y, MinesCell *state);
+/* sets a cell to the passed cell */
+void mines_set_cell(MinesBoard *b, unsigned int x, unsigned int y, MinesCell *c);
 
 /*
- * gets a cell state into the passed pointer, does boundry checks
+ * gets a cell into the passed pointer, does boundry checks
  * note that you should provide memory to fit the MinesCell struct
  */
-void mines_get_cell(MinesBoard *b, unsigned int x, unsigned int y, MinesCell *state);
+void mines_get_cell(MinesBoard *b, unsigned int x, unsigned int y, MinesCell *c);
 
 /*
  * opens a cell, using flood-fill to open nearby free cells
  * returns the number of cells that have been opened
  */
 unsigned int mines_open_cell(MinesBoard *b, unsigned int x, unsigned int y);
+
+/*
+ * sets a cell's state to one of the glyphs (flag or mark).
+ * this is done in a gameplay-wise way (e.g. if the cell is open it can't be flagged or marked
+ * and the call will silently fail. todo: don't fail silently to allow to warn the user when
+ * they do something they're not supposed to to by the rules, but maybe that should be all done
+ * in the frontend).
+ * this also updates the count of flags & marks.
+ * this ignores calls with the last parameter set as Open, calls to modify open cells and calls
+ * where the new state is the same as the old one.
+ */
+void mines_set_cell_glyph(MinesBoard *b, unsigned int x, unsigned int y, MinesCellState s);
 
 /* covers all the cells in an existing board allowing it to be replayed */
 void mines_replay_board(MinesBoard *b);

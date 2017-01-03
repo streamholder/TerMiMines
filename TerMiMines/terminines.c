@@ -23,17 +23,37 @@
 #include "ui.h"
 #include "populators.h"
 
-/*
- * will find a better solution later
- */
+typedef struct
+{
+	char o;
+	unsigned int x;
+	unsigned int y;
+}
+GameInput;
+
+void game_input(GameInput *c)
+{
+	char o, x, y;
+
+	printf("(oxy)> ");
+
+	/* rudimentary cross-platform fix, we can probably do something better (?) */
 #ifdef _MSC_VER
-#define _CRT_SECURE_NO_WARNINGS
+	scanf_s(" %c%c%c", &o, 1, &x, 1, &y, 1);
+#else
+	scanf(" %c%c%c", &o, &x, &y);
 #endif
+
+	c->o = o;
+	c->x = ui_char_to_index(x);
+	c->y = ui_char_to_index(y);
+}
 
 int main(int argc, char *argv[])
 {
 	MinesBoard game;
 	MinesRuleset rules;
+	GameInput c;
 
 	rules.wraparound = 0;
 
@@ -47,9 +67,30 @@ int main(int argc, char *argv[])
 
 	mines_compute_board(&game);
 
-	mines_open_cell(&game, 10, 5); /* random test for ui */
-
 	ui_print_board(&game);
+
+	while (game.state != Game_Lost && game.state != Game_Won)
+	{
+		game_input(&c);
+
+		switch (c.o)
+		{
+		case 'o':
+			mines_open_cell(&game, c.x, c.y);
+			break;
+		case 'f':
+			mines_set_cell_glyph(&game, c.x, c.y, Flagged);
+			break;
+		case 'm':
+			mines_set_cell_glyph(&game, c.x, c.y, Marked);
+			break;
+		case 'c':
+			mines_set_cell_glyph(&game, c.x, c.y, Closed);
+			break;
+		}
+
+		ui_print_board(&game);
+	}
 
 	return 0;
 }

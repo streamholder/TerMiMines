@@ -60,6 +60,7 @@ int mines_init_board(unsigned int width, unsigned int height, MinesRuleset *rule
 	dest->marks = 0;
 	dest->flags = 0;
 	dest->mines = 0;
+	dest->open = 0;
 
 	return 1;
 }
@@ -126,16 +127,18 @@ void mines_compute_board(MinesBoard *b)
 			}
 		}
 	}
+
+	b->mines = mines;
 }
 
-void mines_set_cell(MinesBoard *b, unsigned int x, unsigned int y, MinesCell *state)
+void mines_set_cell(MinesBoard *b, unsigned int x, unsigned int y, MinesCell *c)
 {
-	b->board[x][y] = *state;
+	b->board[x][y] = *c;
 }
 
-void mines_get_cell(MinesBoard *b, unsigned int x, unsigned int y, MinesCell *state)
+void mines_get_cell(MinesBoard *b, unsigned int x, unsigned int y, MinesCell *c)
 {
-	*state = b->board[x][y];
+	*c = b->board[x][y];
 }
 
 unsigned int _mines_open_cell_floodfill(MinesBoard *b, unsigned int x, unsigned int y, unsigned int count)
@@ -182,6 +185,8 @@ unsigned int _mines_open_cell_floodfill(MinesBoard *b, unsigned int x, unsigned 
 
 unsigned int mines_open_cell(MinesBoard *b, unsigned int x, unsigned int y)
 {
+	unsigned int open;
+
 	if (b->board[x][y].content)
 	{
 		b->state = Game_Lost;
@@ -189,11 +194,55 @@ unsigned int mines_open_cell(MinesBoard *b, unsigned int x, unsigned int y)
 		return 1;
 	}
 
+	b->state = Game_Playing;
+
 	/* 
 	 * this could be re-implemented with a queue (linked list? pre-allocated worst-case width*height-wide array?)
 	 * recursion here should not be a problem as long as the board isn't very big, but I'd like to rethink this anyway.
 	 */
-	return _mines_open_cell_floodfill(b, x, y, 0);
+	open = _mines_open_cell_floodfill(b, x, y, 0);
+
+	b->open += open;
+	if (b->width * b->height - b->mines == b->open) /* todo: (width * height - mines) should probably be cached at the beginning in MinesBoard */
+	{
+		b->state = Game_Won;
+	}
+
+	return open;
+}
+
+void mines_set_cell_glyph(MinesBoard *b, unsigned int x, unsigned int y, MinesCellState s)
+{
+	MinesCellState previous = b->board[x][y].state;
+
+	if (previous == Open || previous == s) /* cell is already open or same state, don't do anything! */
+	{
+		return;
+	}
+
+	b->board[x][y].state = s; /* set new state */
+
+	/* remove previous state from count if it was Flagged or Marked */
+	switch (previous)
+	{
+	case Flagged:
+		b->flags--;
+		break;
+	case Marked:
+		b->marks--;
+		break;
+	}
+
+	/* add new state to count if it is Flagged or Marked */
+	switch (s)
+	{
+	case Flagged:
+		b->flags++;
+		break;
+	case Marked:
+		b->marks++;
+		break;
+	}
 }
 
 void mines_replay_board(MinesBoard *b)
@@ -207,4 +256,9 @@ void mines_replay_board(MinesBoard *b)
 			b->board[x][y].state = Closed;
 		}
 	}
+
+	b->state = New_Game;
+	b->flags = 0;
+	b->marks = 0;
+	b->open = 0;
 }
