@@ -66,54 +66,33 @@ const char *UI_FORMAT = ""
 
 #define putstring(s) fputs(s, stdout)
 
-/* todo: rewrite with a macro, should become way smaller */
+/*
+ * macro to allow easier change to the table in the future, entries must be defined in increasing order of index,
+ * let's hope the compiler is smart enough to optimize i out.
+ * if anyone figures out a better way to do all this, please submit a patch.
+ */
+#define UI_ITC_TABLE_ENTRY(start_ch, end_ch) { if (index <= end_ch - start_ch + i) return start_ch + index - i; i += end_ch - start_ch + 1; }
 char ui_index_to_char(unsigned int index)
 {
-	/* numbers 0-9 */
-	if (index <= 9)
-	{
-		return '0' + index;
-	}
+	unsigned int i = 0;
 
-	/* lowercase letters */
-	if (index <= 35) /* 10 + 26 */
-	{
-		return 'a' + index - 10;
-	}
-
-	/* uppercase letters */
-	if (index <= 61) /* 10 + 26 + 26 */
-	{
-		return 'A' + index - 36;
-	}
-
-	/* first 15 ascii symbols */
-	if (index <= 76) /* 10 + 26 + 26 + 15 */
-	{
-		return '!' + index - 62;
-	}
-
-	/* 7 more ascii symbols */
-	if (index <= 83) /* 10 + 26 + 26 + 15 + 7 */
-	{
-		return ':' + index - 77;
-	}
-
-	/* 6 more ascii symbols */
-	if (index <= 89) /* 10 + 26 + 26 + 15 + 7 + 6 */
-	{
-		return '[' + index - 84;
-	}
-
-	/* last 4 ascii symbols */
-	if (index <= 93) /* 10 + 26 + 26 + 15 + 7 + 6 + 4 */
-	{
-		return '{' + index - 90;
-	}
+	UI_ITC_TABLE_ENTRY('0', '9'); /* 0-9 */
+	UI_ITC_TABLE_ENTRY('a', 'z'); /* 10-35 */
+	UI_ITC_TABLE_ENTRY('A', 'Z'); /* 36-61 */
+	UI_ITC_TABLE_ENTRY('!', '/'); /* 62-75 */
+	UI_ITC_TABLE_ENTRY(':', '@'); /* 77-83 */
+	UI_ITC_TABLE_ENTRY('[', '`'); /* 84-89 */
+	UI_ITC_TABLE_ENTRY('{', '~'); /* 90-93 */
 
 	return 0;
 }
 
+/*
+ * same as above. this macro takes 3 parameters instead of two for the simple reason that while indices are necessarily continuous
+ * (and thus can be kept track of internally using a counter) we are not necessarily using all ascii characters in a continuous range.
+ * entries must be defined in increasing order of ascii character number.
+ */
+#define UI_CTI_TABLE_ENTRY(start_ch, end_ch, start_index) if (ch <= end_ch) return ch - start_ch + start_index;
 unsigned int ui_char_to_index(char ch)
 {
 	if (ch < '!')
@@ -121,40 +100,13 @@ unsigned int ui_char_to_index(char ch)
 		return UI_MAX_VALID_INDEX + 1;
 	}
 
-	if (ch <= 47)
-	{
-		return ch - '!' + 62;
-	}
-
-	if (ch <= '9')
-	{
-		return ch - '0';
-	}
-
-	if (ch <= '@')
-	{
-		return ch - ':' + 77;
-	}
-
-	if (ch <= 'Z')
-	{
-		return ch - 'A' + 36;
-	}
-
-	if (ch <= '`')
-	{
-		return ch - '[' + 84;
-	}
-
-	if (ch <= 'z')
-	{
-		return ch - 'a' + 10;
-	}
-
-	if (ch <= '~')
-	{
-		return ch - '{' + 90;
-	}
+	UI_CTI_TABLE_ENTRY('!', '/', 62);
+	UI_CTI_TABLE_ENTRY('0', '9', 0);
+	UI_CTI_TABLE_ENTRY(':', '@', 77);
+	UI_CTI_TABLE_ENTRY('A', 'Z', 36);
+	UI_CTI_TABLE_ENTRY('[', '`', 84);
+	UI_CTI_TABLE_ENTRY('a', 'z', 10);
+	UI_CTI_TABLE_ENTRY('{', '~', 90);
 
 	return UI_MAX_VALID_INDEX + 1;
 }
