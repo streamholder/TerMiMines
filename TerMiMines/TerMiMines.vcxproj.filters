@@ -41,9 +41,6 @@
     <ClInclude Include="populators.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="stdio_platforms.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="random.h">
       <Filter>Header Files</Filter>
     </ClInclude>

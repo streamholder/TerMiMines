@@ -5,3 +5,5 @@
 * add input capabilities to the game (right now the game can't be played!)
 
 * add support for saving and loading games (in at least two formats: binary space-optimized and human-readable, or possibly binary only but adding a "visualizer mode")
+
+* make it multi-platform (a good first step would be trying to compile with Clang on VS, which should really work out of the box for the code we have at this point in time)
