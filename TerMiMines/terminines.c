@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Riccardo Paolo Bestetti <riccardo [dt] kyogre [at] live [dt] it>
+ * Copyright 2016-2017 Riccardo Paolo Bestetti <riccardo [dt] kyogre [at] live [dt] it>
  *
  * This file is part of TerMiMines.
  *
@@ -8,7 +8,7 @@
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Nome-Programma is distributed in the hope that it will be useful,
+ * TerMiMines is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
@@ -32,7 +32,6 @@
 
 int main(int argc, char *argv[])
 {
-	unsigned int x, y;
 	MinesBoard game;
 	MinesRuleset rules;
 
@@ -44,7 +43,7 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	mines_populate_board(&game, 0, &populators_pseudorandom);
+	mines_populate_board(&game, 0xDEADBEEF, &populators_pseudorandom);
 
 	mines_compute_board(&game);
 

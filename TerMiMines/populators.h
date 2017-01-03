@@ -1,5 +1,5 @@
 /*
-* Copyright 2016 Riccardo Paolo Bestetti <riccardo [dt] kyogre [at] live [dt] it>
+* Copyright 2016-2017 Riccardo Paolo Bestetti <riccardo [dt] kyogre [at] live [dt] it>
 *
 * This file is part of TerMiMines.
 *
@@ -8,7 +8,7 @@
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 *
-* Nome-Programma is distributed in the hope that it will be useful,
+* TerMiMines is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 * GNU General Public License for more details.
@@ -29,9 +29,9 @@
  * 3: horizontal lines
  * For other seed values, it leaves all content values uninitialized
  */
-int populators_test(MinesCell *cell, unsigned int x, unsigned int y, int seed);
+void populators_test(MinesCell **board, unsigned int x, unsigned int y, int seed);
 
 /*
- * pseudorandom generator which ignores the seed (see TODO)
+ * pseudorandom generator
  */
-int populators_pseudorandom(MinesCell *cell, unsigned int x, unsigned int y, int seed);
+void populators_pseudorandom(MinesCell **board, unsigned int x, unsigned int y, int seed);

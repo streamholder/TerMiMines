@@ -1,5 +1,5 @@
 ﻿/*
-* Copyright 2016 Riccardo Paolo Bestetti <riccardo [dt] kyogre [at] live [dt] it>
+* Copyright 2016-2017 Riccardo Paolo Bestetti <riccardo [dt] kyogre [at] live [dt] it>
 *
 * This file is part of TerMiMines.
 *
@@ -8,7 +8,7 @@
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 *
-* Nome-Programma is distributed in the hope that it will be useful,
+* TerMiMines is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 * GNU General Public License for more details.
@@ -30,6 +30,9 @@
 
 
 /* ─│┌┐└┘├┤┬┴┼═║╒╓╔╕╖╗╘╙╚╛╜╝╞╠╟╡╢╣╤╥╦╧╨╩╪╫╬ */
+
+/* this is mostly to stop the compiler complaining about code paths not returning any values */
+const char *UI_INVALID_STATE = "If you are reading this, the game is broken in some bad way";
 
 const char *UI_NEW_GAME = "New game";
 const char *UI_PLAYING = "Playing";
@@ -53,6 +56,8 @@ const char * _ui_state_to_string(MinesGameState state)
 		return UI_LOST;
 		break;
 	}
+
+	return UI_INVALID_STATE;
 }
 
 const char *UI_FORMAT = ""

@@ -1,6 +1,7 @@
-* populators need to be redone since they are pretty much useless without the possibility of state-keeping
-** complete the game:
-   - write a useful board populator after redoing populators
-   - complete the UI with input
+* rewrite populators system to be modular (i.e. allow loading populators with metadata and parameters from external libraries)
 
 * redo ui to be more efficient (only redraw what's needed, this will require a hook in _mines_open_cell_floodfill)
+
+* add input capabilities to the game (right now the game can't be played!)
+
+* add support for saving and loading games (in at least two formats: binary space-optimized and human-readable, or possibly binary only but adding a "visualizer mode")

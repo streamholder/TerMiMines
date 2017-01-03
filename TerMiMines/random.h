@@ -1,4 +1,4 @@
-﻿/*
+/*
 * Copyright 2016-2017 Riccardo Paolo Bestetti <riccardo [dt] kyogre [at] live [dt] it>
 *
 * This file is part of TerMiMines.
@@ -19,7 +19,15 @@
 
 #pragma once
 
-#include "mines.h"
+/*
+ * sets the seed for the prng. please note that the current implementation uses
+ * stdlib's prng, so this call will change its internal state
+ */
+void random_seed(int seed);
 
-void ui_print_board(MinesBoard *board);
-
+/*
+ * uniformely get a random unsigned integer in range [min, max].
+ * this only works for max - min + 1 < RAND_MAX i.e. it is only guaranteed to work for
+ * ranges smaller than 32767
+ */
+unsigned int random_uint(unsigned int min, unsigned int max);

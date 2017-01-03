@@ -1,5 +1,5 @@
 /*
-* Copyright 2016 Riccardo Paolo Bestetti <riccardo [dt] kyogre [at] live [dt] it>
+* Copyright 2016-2017 Riccardo Paolo Bestetti <riccardo [dt] kyogre [at] live [dt] it>
 *
 * This file is part of TerMiMines.
 *
@@ -8,7 +8,7 @@
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 *
-* Nome-Programma is distributed in the hope that it will be useful,
+* TerMiMines is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 * GNU General Public License for more details.
@@ -52,7 +52,7 @@ struct _MinesBoard_s
 };
 typedef struct _MinesBoard_s MinesBoard;
 
-typedef int (*MinesBoardPopulator)(MinesCell *, unsigned int, unsigned int, int);
+typedef void (*MinesBoardPopulator)(MinesCell **, unsigned int, unsigned int, int);
 
 
 /* all the functions assume that you are passing a valid pointer, no void check in here! */

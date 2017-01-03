@@ -112,12 +112,14 @@
   <ItemGroup>
     <ClCompile Include="mines.c" />
     <ClCompile Include="populators.c" />
+    <ClCompile Include="random.c" />
     <ClCompile Include="terminines.c" />
     <ClCompile Include="ui.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="mines.h" />
     <ClInclude Include="populators.h" />
+    <ClInclude Include="random.h" />
     <ClInclude Include="stdio_platforms.h" />
     <ClInclude Include="ui.h" />
   </ItemGroup>

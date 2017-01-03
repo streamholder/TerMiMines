@@ -1,5 +1,5 @@
 /*
-* Copyright 2016 Riccardo Paolo Bestetti <riccardo [dt] kyogre [at] live [dt] it>
+* Copyright 2016-2017 Riccardo Paolo Bestetti <riccardo [dt] kyogre [at] live [dt] it>
 *
 * This file is part of TerMiMines.
 *
@@ -8,7 +8,7 @@
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
 *
-* Nome-Programma is distributed in the hope that it will be useful,
+* TerMiMines is distributed in the hope that it will be useful,
 * but WITHOUT ANY WARRANTY; without even the implied warranty of
 * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 * GNU General Public License for more details.
@@ -87,18 +87,9 @@ int mines_destroy_board(MinesBoard *b)
 	return 1;
 }
 
-void mines_populate_board(MinesBoard * b, int seed, MinesBoardPopulator populator)
+void mines_populate_board(MinesBoard *b, int seed, MinesBoardPopulator populator)
 {
-	unsigned int x, y;
-
-	/* simple 2d iteration, all the magic happens in the MinesBoardPopulator typedef */
-	for (x = 0; x < b->width; x++)
-	{
-		for (y = 0; y < b->height; y++)
-		{
-			seed = populator(&b->board[x][y], x, y, seed);
-		}
-	}
+	populator(b->board, b->width, b->height, seed);
 }
 
 void mines_compute_board(MinesBoard *b)
