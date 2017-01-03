@@ -107,7 +107,7 @@ void mines_compute_board(MinesBoard *b)
 		for (y = 0; y < b->height; y++)
 		{
 			acc = 0;
-			
+
 			/* this seems to be the least intricate way to iterate on all valid cells, i.e. I'm open to suggestions */
 			for (xl = (x == 0 ? 0 : x - 1); xl <= (x == b->width - 1 ? x : x + 1); xl++)
 			{

@@ -54,7 +54,6 @@ typedef struct _MinesBoard_s MinesBoard;
 
 typedef void (*MinesBoardPopulator)(MinesCell **, unsigned int, unsigned int, int);
 
-
 /* all the functions assume that you are passing a valid pointer, no void check in here! */
 
 /*
@@ -68,7 +67,6 @@ int mines_init_board(unsigned int width, unsigned int height, MinesRuleset *rule
  * always returns 1
  */
 int mines_destroy_board(MinesBoard *b);
-
 
 /*
  * populates a board with mines with a seed-based populator

@@ -3,11 +3,11 @@ Contributions in the form of optimization, new features, bugfixes, new populator
 The code style for the project is as follows (* = to be fixed in existing code):
 - Curly brackets always go on their own line, except after the "do" keyword
 - Indent with tab
-- No tab on empty lines*
+- No tab on empty lines (just regex-replace \n\s+\n with \n\n in all files before submitting)
 - Pointer asterisks always go with identifiers but in function return types, where they stand alone
 - Leave whitespace around all operators but ++ and --
 - Always put parenthesis around code blocks even if made up of a single statement
-- Maximum line width is still to be decided, try to keep it reasonable for now
+- Maximum line width is still to be decided, try to keep it reasonable for now*
 - Typedefs are CamelCase, functions are lowercase_with_underscores, variables are lowercase
 
 If something is not specified in this file and you're not sure what to do, please open an Issue on GitHub.

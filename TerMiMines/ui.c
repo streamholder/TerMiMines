@@ -28,7 +28,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
-
 /* ─│┌┐└┘├┤┬┴┼═║╒╓╔╕╖╗╘╙╚╛╜╝╞╠╟╡╢╣╤╥╦╧╨╩╪╫╬ */
 
 /* this is mostly to stop the compiler complaining about code paths not returning any values */
