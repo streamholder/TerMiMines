@@ -66,6 +66,99 @@ const char *UI_FORMAT = ""
 
 #define putstring(s) fputs(s, stdout)
 
+/* todo: rewrite with a macro, should become way smaller */
+char ui_index_to_char(unsigned int index)
+{
+	/* numbers 0-9 */
+	if (index <= 9)
+	{
+		return '0' + index;
+	}
+
+	/* lowercase letters */
+	if (index <= 35) /* 10 + 26 */
+	{
+		return 'a' + index - 10;
+	}
+
+	/* uppercase letters */
+	if (index <= 61) /* 10 + 26 + 26 */
+	{
+		return 'A' + index - 36;
+	}
+
+	/* first 15 ascii symbols */
+	if (index <= 76) /* 10 + 26 + 26 + 15 */
+	{
+		return '!' + index - 62;
+	}
+
+	/* 7 more ascii symbols */
+	if (index <= 83) /* 10 + 26 + 26 + 15 + 7 */
+	{
+		return ':' + index - 77;
+	}
+
+	/* 6 more ascii symbols */
+	if (index <= 89) /* 10 + 26 + 26 + 15 + 7 + 6 */
+	{
+		return '[' + index - 84;
+	}
+
+	/* last 4 ascii symbols */
+	if (index <= 93) /* 10 + 26 + 26 + 15 + 7 + 6 + 4 */
+	{
+		return '{' + index - 90;
+	}
+
+	return 0;
+}
+
+unsigned int ui_char_to_index(char ch)
+{
+	if (ch < '!')
+	{
+		return UI_MAX_VALID_INDEX + 1;
+	}
+
+	if (ch <= 47)
+	{
+		return ch - '!' + 62;
+	}
+
+	if (ch <= '9')
+	{
+		return ch - '0';
+	}
+
+	if (ch <= '@')
+	{
+		return ch - ':' + 77;
+	}
+
+	if (ch <= 'Z')
+	{
+		return ch - 'A' + 36;
+	}
+
+	if (ch <= '`')
+	{
+		return ch - '[' + 84;
+	}
+
+	if (ch <= 'z')
+	{
+		return ch - 'a' + 10;
+	}
+
+	if (ch <= '~')
+	{
+		return ch - '{' + 90;
+	}
+
+	return UI_MAX_VALID_INDEX + 1;
+}
+
 void ui_print_board(MinesBoard *board) /* to heavily optimize */
 {
 	unsigned int x, y;
@@ -73,7 +166,17 @@ void ui_print_board(MinesBoard *board) /* to heavily optimize */
 
 	printf(UI_FORMAT, _ui_state_to_string(board->state), board->mines - board->flags);
 
+	/* print x index  */
+	putchar(' ');
+	for (x = 0; x < board->width; x++)
+	{
+		putchar(' ');
+		putchar(ui_index_to_char(x));
+	}
+	putchar('\n');
+
 	/* print first row  */
+	putchar(' ');
 	for (x = 0; x < board->width; x++)
 	{
 		putstring("+-");
@@ -84,6 +187,7 @@ void ui_print_board(MinesBoard *board) /* to heavily optimize */
 	for (y = 0; y < board->height; y++)
 	{
 		/* | | | | */
+		putchar(ui_index_to_char(y));
 		for (x = 0; x < board->width; x++)
 		{
 			putchar('|');
@@ -116,6 +220,7 @@ void ui_print_board(MinesBoard *board) /* to heavily optimize */
 		putstring("|\n");
 
 		/* +-+-+-+ */
+		putchar(' ');
 		for (x = 0; x < board->width; x++)
 		{
 			putstring("+-");
