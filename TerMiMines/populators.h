@@ -36,7 +36,6 @@ void populators_test(MinesCell **board, unsigned int width, unsigned int height,
  */
 void populators_pseudorandom(MinesCell **board, unsigned int width, unsigned int height, int seed, int param);
 
-
 /*
  * populator that should resemble what classical minesweeper implementations do.
  * seed is used for prng, param is the number of bombs.

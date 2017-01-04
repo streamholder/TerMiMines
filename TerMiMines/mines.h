@@ -53,7 +53,7 @@ struct _MinesBoard_s
 };
 typedef struct _MinesBoard_s MinesBoard;
 
-typedef void (*MinesBoardPopulator)(MinesCell **, unsigned int, unsigned int, int);
+typedef void (*MinesBoardPopulator)(MinesCell **, unsigned int, unsigned int, int, int);
 
 /* all the functions assume that you are passing a valid pointer, no void check in here! */
 

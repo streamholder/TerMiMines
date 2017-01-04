@@ -99,7 +99,7 @@ void populators_nummines(MinesCell **board, unsigned int width, unsigned int hei
 	unsigned int mine, x, y;
 	const unsigned int max = width * height - 1;
 
-	if (param > max) /* this avoids infinite looping :) */
+	if ((unsigned int)param > max) /* this avoids infinite looping :) */
 	{
 		param = max;
 	}

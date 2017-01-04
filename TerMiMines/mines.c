@@ -120,7 +120,10 @@ void mines_compute_board(MinesBoard *b)
 		{
 			acc = 0;
 
-			/* this seems to be the least intricate way to iterate on all valid cells, i.e. I'm open to suggestions */
+			/*
+			 * this seems to be the least intricate way to iterate on all valid cells, i.e. I'm open to suggestions.
+			 * if you fix this, also fix _mines_open_cell_floodfill which uses the same algorithm.
+			 */
 			for (xl = (x == 0 ? 0 : x - 1); xl <= (x == b->width - 1 ? x : x + 1); xl++)
 			{
 				for (yl = (y == 0 ? 0 : y - 1); yl <= (y == b->height - 1 ? y : y + 1); yl++)
@@ -154,6 +157,8 @@ void mines_get_cell(MinesBoard *b, unsigned int x, unsigned int y, MinesCell *c)
 
 unsigned int _mines_open_cell_floodfill(MinesBoard *b, unsigned int x, unsigned int y, unsigned int count)
 {
+	unsigned int xl, yl;
+
 	if (b->board[x][y].state != Closed)
 	{
 		return count;
@@ -169,26 +174,14 @@ unsigned int _mines_open_cell_floodfill(MinesBoard *b, unsigned int x, unsigned 
 		return count;
 	}
 
-	/* process all valid neighbour cells */
-
-	if (x > 0) /* flood fill to the left */
+	/* process all valid neighbour cells, same algorithm as mines_compute_board */
+	for (xl = (x == 0 ? 0 : x - 1); xl <= (x == b->width - 1 ? x : x + 1); xl++)
 	{
-		count = _mines_open_cell_floodfill(b, x - 1, y, count);
-	}
-
-	if (x < b->width - 1) /* flood fill to the right */
-	{
-		count = _mines_open_cell_floodfill(b, x + 1, y, count);
-	}
-
-	if (y > 0) /* flood fill upwards */
-	{
-		count = _mines_open_cell_floodfill(b, x, y - 1, count);
-	}
-
-	if (y < b->height - 1) /* flood fill downwards */
-	{
-		count = _mines_open_cell_floodfill(b, x, y + 1, count);
+		for (yl = (y == 0 ? 0 : y - 1); yl <= (y == b->height - 1 ? y : y + 1); yl++)
+		{
+			if (x == xl && y == yl) continue;
+			count += _mines_open_cell_floodfill(b, xl, yl, count);
+		}
 	}
 
 	return count;
@@ -200,7 +193,7 @@ unsigned int mines_open_cell(MinesBoard *b, unsigned int x, unsigned int y)
 
 	b->state = Game_Playing; /* game starts whenever a glyph is changed or a cell is being opened */
 
-	if (b->board[x][y].state == Flagged | b->board[x][y].state == Marked) /* don't open glyphed cells */
+	if (b->board[x][y].state == Flagged || b->board[x][y].state == Marked) /* don't open glyphed cells */
 	{
 		return 0;
 	}
