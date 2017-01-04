@@ -22,16 +22,23 @@
 #include "mines.h"
 
 /*
- * Generates test games with various patterns depending on the seed
+ * Generates test games with various patterns depending on the param. ignores the seed.
  * 0: empty board
  * 1: all bombs
  * 2: checker pattern
  * 3: horizontal lines
- * For other seed values, it leaves all content values uninitialized
+ * For other param values, it leaves all content values uninitialized
  */
-void populators_test(MinesCell **board, unsigned int x, unsigned int y, int seed);
+void populators_test(MinesCell **board, unsigned int width, unsigned int height, int seed, int param);
 
 /*
- * pseudorandom generator
+ * pseudorandom generator. ignores the param.
  */
-void populators_pseudorandom(MinesCell **board, unsigned int x, unsigned int y, int seed);
+void populators_pseudorandom(MinesCell **board, unsigned int width, unsigned int height, int seed, int param);
+
+
+/*
+ * populator that should resemble what classical minesweeper implementations do.
+ * seed is used for prng, param is the number of bombs.
+ */
+void populators_nummines(MinesCell **board, unsigned int width, unsigned int height, int seed, int param);

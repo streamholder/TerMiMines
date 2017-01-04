@@ -88,9 +88,20 @@ int mines_destroy_board(MinesBoard *b)
 	return 1;
 }
 
-void mines_populate_board(MinesBoard *b, int seed, MinesBoardPopulator populator)
+void mines_populate_board(MinesBoard *b, int seed, int param, MinesBoardPopulator populator)
 {
-	populator(b->board, b->width, b->height, seed);
+	unsigned int x, y;
+
+	for (x = 0; x < b->width; x++)
+	{
+		for (y = 0; y < b->height; y++)
+		{
+			b->board[x][y].content = 0;
+			b->board[x][y].state = Closed;
+		}
+	}
+
+	populator(b->board, b->width, b->height, seed, param);
 }
 
 void mines_compute_board(MinesBoard *b)

@@ -35,6 +35,8 @@ unsigned int random_uint(unsigned int min, unsigned int max)
 	 * falls into one of the wells. this way a truly uniform distribution is guaranteed.
 	 * this is especially useful if RAND_MAX is small (it is guaranteed to only be as big as 32767).
 	 * this is also definitely not useful for a poorly implemented minesweeper clone... :)
+	 * the algorithm could technically stall forever, but it is pretty much guaranteed it won't by the
+	 * C standard which dictates a uniform distribution for rand().
 	 */
 
 	int candidate;

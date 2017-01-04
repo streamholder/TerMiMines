@@ -70,12 +70,13 @@ int mines_init_board(unsigned int width, unsigned int height, MinesRuleset *rule
 int mines_destroy_board(MinesBoard *b);
 
 /*
- * populates a board with mines with a seed-based populator
+ * populates a board with mines with a seed & param based populator
  * accepts a populator function with the following prototype:
  * int populator(MinesCell *cell, unsigned int x, unsigned int y, int seed)
  * where the returned value is the seed for the next cell (usually the same seed that has been passed!)
+ * the populator is guaranteed to receive initialized structs, with all mines set to 0 and all cells closed.
  */
-void mines_populate_board(MinesBoard *b, int seed, MinesBoardPopulator populator);
+void mines_populate_board(MinesBoard *b, int seed, int param, MinesBoardPopulator populator);
 
 /* computes the neighbours for all cells and the number of mines */
 void mines_compute_board(MinesBoard *b);
