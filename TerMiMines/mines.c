@@ -198,14 +198,19 @@ unsigned int mines_open_cell(MinesBoard *b, unsigned int x, unsigned int y)
 {
 	unsigned int open;
 
-	if (b->board[x][y].content)
+	b->state = Game_Playing; /* game starts whenever a glyph is changed or a cell is being opened */
+
+	if (b->board[x][y].state == Flagged | b->board[x][y].state == Marked) /* don't open glyphed cells */
+	{
+		return 0;
+	}
+
+	if (b->board[x][y].content) /* game is lost if a mine is opened */
 	{
 		b->state = Game_Lost;
 		b->board[x][y].state = Open;
 		return 1;
 	}
-
-	b->state = Game_Playing;
 
 	/* 
 	 * this could be re-implemented with a queue (linked list? pre-allocated worst-case width*height-wide array?)
@@ -225,6 +230,8 @@ unsigned int mines_open_cell(MinesBoard *b, unsigned int x, unsigned int y)
 void mines_set_cell_glyph(MinesBoard *b, unsigned int x, unsigned int y, MinesCellState s)
 {
 	MinesCellState previous = b->board[x][y].state;
+
+	b->state = Game_Playing; /* game starts whenever a glyph is changed or a cell is being opened */
 
 	if (previous == Open || previous == s) /* cell is already open or same state, don't do anything! */
 	{
