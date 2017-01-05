@@ -148,7 +148,7 @@ void ui_print_board(MinesBoard *board) /* to heavily optimize */
 			switch (cell.state)
 			{
 			case Closed:
-				putchar(176); /* ░ */
+				putchar(x % 2 ? 177 : 176); /* ░ */
 				break;
 			case Flagged:
 				putchar('>');

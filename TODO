@@ -2,8 +2,10 @@
 
 * redo ui to be more efficient (only redraw what's needed, this will require a hook in _mines_open_cell_floodfill)
 
-* add input capabilities to the game (right now the game can't be played!)
-
 * add support for saving and loading games (in at least two formats: binary space-optimized and human-readable, or possibly binary only but adding a "visualizer mode")
 
 * make it multi-platform (a good first step would be trying to compile with Clang on VS, which should really work out of the box for the code we have at this point in time)
+
+* add instructions before the game & ask the user for game options (size and amount of mines)
+
+* add command line options for help and for starting a game with pre-set options

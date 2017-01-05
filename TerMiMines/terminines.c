@@ -57,13 +57,13 @@ int main(int argc, char *argv[])
 
 	rules.wraparound = 0;
 
-	if (!mines_init_board(40, 10, &rules, &game))
+	if (!mines_init_board(34, 10, &rules, &game))
 	{
 		fprintf(stderr, "Cannot start the game, failed to initialize the board");
 		return 1;
 	}
 
-	mines_populate_board(&game, 0xDEADBEEF, 80, &populators_nummines);
+	mines_populate_board(&game, 0xDEADBEEF, 50, &populators_nummines);
 
 	mines_compute_board(&game);
 
