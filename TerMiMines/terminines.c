@@ -63,7 +63,7 @@ int main(int argc, char *argv[])
 		return 1;
 	}
 
-	mines_populate_board(&game, 0xDEADBEEF, 50, &populators_nummines);
+	mines_populate_board(&game, 0xDEADCA70, 50, &populators_nummines);
 
 	mines_compute_board(&game);
 

@@ -115,6 +115,7 @@ void ui_print_board(MinesBoard *board) /* to heavily optimize */
 {
 	unsigned int x, y;
 	MinesCell cell;
+	MinesCellState realstate;
 
 	printf(UI_FORMAT, _ui_state_to_string(board->state), board->mines - board->flags);
 
@@ -145,7 +146,17 @@ void ui_print_board(MinesBoard *board) /* to heavily optimize */
 			putchar('|');
 
 			mines_get_cell(board, x, y, &cell);
-			switch (cell.state)
+
+			if (board->state == Game_Lost && cell.content) /* if game is over and cell is a bomb */
+			{
+				realstate = Open;
+			}
+			else
+			{
+				realstate = cell.state;
+			}
+
+			switch (realstate)
 			{
 			case Closed:
 				putchar(x % 2 ? 177 : 176); /* ░ */
