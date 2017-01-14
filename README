@@ -1,5 +1,6 @@
-TerMiMines was born because of a Squirrel.
+TerMiMines is a Minesweeper implementation in C. It has no particular use other than being an exercise.
 
+It currently runs on Windows.
 If you have some time to spare, please compile it and test it on Linux and write a Makefile, then submit a pull request.
 
 Enjoy.
